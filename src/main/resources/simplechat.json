@@ -1,8 +1,8 @@
 {
   "enable_chat_mod": true,
-  "enable_global_chat": false,
+  "enable_global_chat": true,
   "enable_chat_colors": false,
-  "local_chat_format": "%player% > &7%message%",
-  "global_chat_format": "&8[&bG&8] &r%player% > &e%message%",
+  "local_chat_format": "&7%ftbteam%&r%player%&7:&r &7%message%",
+  "global_chat_format": "&8[&bG&8] &7%ftbteam%&r%player%&7:&r &e%message%",
   "chat_range": 100
 }

@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.Objects;
 
+import me.vetustus.server.simplechat.integration.FTBTeamsIntegration;
+import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,6 +40,8 @@ public class SimpleChat implements ModInitializer {
             e.printStackTrace();
         }
 
+        boolean ftbteams = FabricLoader.getInstance().isModLoaded("ftbteams");
+
         PlayerChatCallback.EVENT.register((player, message) -> {
             PlayerChatCallback.ChatMessage chatMessage = new PlayerChatCallback.ChatMessage(player, message);
 
@@ -63,7 +67,8 @@ public class SimpleChat implements ModInitializer {
             chatFormat = translateChatColors('&', chatFormat);
             String stringMessage = chatFormat
                     .replaceAll("%player%", player.getName().asString())
-                    .replaceAll("%message%", message);
+                    .replaceAll("%message%", message)
+                    .replaceAll("%ftbteam%", ftbteams ? FTBTeamsIntegration.getTeam(player) : "");
             if (config.isChatColorsEnabled())
                 stringMessage = translateChatColors('&', stringMessage);
 

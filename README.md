@@ -1,7 +1,7 @@
 # SimpleChat
 ![modrinth_downloads](https://modrinth-utils.vercel.app/api/badge/downloads?id=2KNt6S40&logo=true)
 ![modrinth_versions](https://modrinth-utils.vercel.app/api/badge/versions?id=2KNt6S40&logo=true)
-![java_16](https://img.shields.io/badge/java-16+-orange?logo=java)
+![java_16](https://img.shields.io/badge/java-17+-orange?logo=java)
 
 _A simple chat mod for your server._
 
@@ -9,6 +9,7 @@ Works even in a single player game.
 
 ![Imgur](https://i.imgur.com/orpafbR.jpg)
 ## Features
+- FTB Teams integration
 - Global and local chat (you can turn it off)
 - Color chat (you can turn it off)
 - Reloading the configuration with the command
@@ -30,8 +31,8 @@ The configuration is located in `<game or server directory>/config/simplechat.js
   "enable_chat_mod": true,
   "enable_global_chat": false,
   "enable_chat_colors": false,
-  "local_chat_format": "%player% > &7%message%",
-  "global_chat_format": "&8[&bG&8] &r%player% > &e%message%",
+  "local_chat_format": "&7%ftbteam%&r%player%&7:&r &7%message%",
+  "global_chat_format": "&8[&bG&8] &7%ftbteam%&r%player%&7:&r &e%message%",
   "chat_range": 100
 }
 ```

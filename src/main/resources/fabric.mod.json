@@ -5,11 +5,11 @@
   "name": "SimpleChat",
   "description": "A simple mod for setting up a chat on your server",
   "authors": [
-    "vetustus, AzureDoom, rantuhin"
+    "vetustus, AzureDoom, rantuhin, stark"
   ],
   "contact": {
-    "issues": "https://github.com/rantuhin/SimpleChat/issues",
-    "sources": "https://github.com/rantuhin/SimpleChat"
+    "issues": "https://github.com/stanlystark/SimpleChat/issues",
+    "sources": "https://github.com/stanlystark/SimpleChat"
   },
   "license": "MIT",
   "icon": "assets/simplechat/icon.png",
@@ -23,7 +23,7 @@
     "simplechat.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.12.5",
+    "fabricloader": ">=0.14.9",
     "fabric": "*",
     "minecraft": "1.18.x"
   }
