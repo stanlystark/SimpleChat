@@ -47,6 +47,7 @@ dependencies {
 
 
     modCompileOnly("dev.ftb.mods:ftb-teams-fabric:${project.ftb_teams_version}") { transitive false }
+    modCompileOnly("net.luckperms:api:${project.luckperms_version}") { transitive false }
 }
 
 processResources {

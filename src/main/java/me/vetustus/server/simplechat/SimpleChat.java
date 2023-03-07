@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 import me.vetustus.server.simplechat.integration.FTBTeamsIntegration;
+import me.vetustus.server.simplechat.integration.LuckPermsIntegration;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,6 +42,7 @@ public class SimpleChat implements ModInitializer {
         }
 
         boolean ftbteams = FabricLoader.getInstance().isModLoaded("ftbteams");
+        boolean luckperms = FabricLoader.getInstance().isModLoaded("luckperms");
 
         PlayerChatCallback.EVENT.register((player, message) -> {
             PlayerChatCallback.ChatMessage chatMessage = new PlayerChatCallback.ChatMessage(player, message);
@@ -54,6 +56,8 @@ public class SimpleChat implements ModInitializer {
                 return chatMessage;
 
             chatMessage.setCancelled(true);
+
+            // TODO: Add mention/private message
 
             boolean isGlobalMessage = false;
             boolean isWorldMessage = false;
@@ -72,15 +76,23 @@ public class SimpleChat implements ModInitializer {
                     message = message.substring(1);
                 }
             }
-            chatFormat = translateChatColors('&', chatFormat);
-            String stringMessage = chatFormat
+            String prepareStringMessage = chatFormat
                     .replaceAll("%player%", player.getName().asString())
-                    .replaceAll("%message%", message)
-                    .replaceAll("%ftbteam%", ftbteams ? FTBTeamsIntegration.getTeam(player) : "");
+                    .replaceAll("%ftbteam%", ftbteams ? FTBTeamsIntegration.getTeam(player) : "")
+                    .replaceAll("%lp_group%", luckperms ? translateChatColors('&', LuckPermsIntegration.getPrimaryGroup(player)) : "")
+                    .replaceAll("%lp_prefix%", luckperms ? translateChatColors('&', LuckPermsIntegration.getPrefix(player)) : "")
+                    .replaceAll("%lp_suffix%", luckperms ? translateChatColors('&', LuckPermsIntegration.getSuffix(player)) : "");
+            prepareStringMessage = translateChatColors('&', prepareStringMessage);
+
+            String stringMessage = prepareStringMessage
+                    .replaceAll("%message%", message);
+
             if (config.isChatColorsEnabled())
                 stringMessage = translateChatColors('&', stringMessage);
 
             Text resultMessage = literal(stringMessage);
+
+            // TODO: Add check are there players nearby
 
             List<ServerPlayerEntity> players = Objects.requireNonNull(player.getServer(), "The server cannot be null.")
                     .getPlayerManager().getPlayerList();
