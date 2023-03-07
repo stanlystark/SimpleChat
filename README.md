@@ -1,7 +1,7 @@
 # SimpleChat
-![modrinth_downloads](https://modrinth-utils.vercel.app/api/badge/downloads?id=2KNt6S40&logo=true)
-![modrinth_versions](https://modrinth-utils.vercel.app/api/badge/versions?id=2KNt6S40&logo=true)
-![java_16](https://img.shields.io/badge/java-17+-orange?logo=java)
+![modrinth_downloads](https://modrinth-utils.vercel.app/api/badge/downloads?id=O2DN3m2D&logo=true)
+![modrinth_versions](https://modrinth-utils.vercel.app/api/badge/versions?id=O2DN3m2D&logo=true)
+![java_17](https://img.shields.io/badge/java-17+-orange?logo=java)
 
 _A simple chat mod for your server._
 

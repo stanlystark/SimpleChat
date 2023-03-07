@@ -56,11 +56,19 @@ public class SimpleChat implements ModInitializer {
             chatMessage.setCancelled(true);
 
             boolean isGlobalMessage = false;
+            boolean isWorldMessage = false;
             String chatFormat = config.getLocalChatFormat();
             if (config.isGlobalChatEnabled()) {
                 if (message.startsWith("!")) {
                     isGlobalMessage = true;
                     chatFormat = config.getGlobalChatFormat();
+                    message = message.substring(1);
+                }
+            }
+            if (config.isWorldChatEnabled()) {
+                if (message.startsWith("#")) {
+                    isWorldMessage = true;
+                    chatFormat = config.getWorldChatFormat();
                     message = message.substring(1);
                 }
             }
@@ -77,9 +85,24 @@ public class SimpleChat implements ModInitializer {
             List<ServerPlayerEntity> players = Objects.requireNonNull(player.getServer(), "The server cannot be null.")
                     .getPlayerManager().getPlayerList();
             for (ServerPlayerEntity p : players) {
+
                 if (config.isGlobalChatEnabled()) {
                     if (isGlobalMessage) {
                         p.sendMessage(resultMessage, false);
+                    } else if (isWorldMessage && config.isWorldChatEnabled()) {
+                        if (p.getEntityWorld().getRegistryKey().getValue() == player.getEntityWorld().getRegistryKey().getValue()) {
+                            p.sendMessage(resultMessage, false);
+                        }
+                    } else {
+                        if (p.squaredDistanceTo(player) <= config.getChatRange()) {
+                            p.sendMessage(resultMessage, false);
+                        }
+                    }
+                } else if (config.isWorldChatEnabled()) {
+                    if (isWorldMessage) {
+                        if (p.getEntityWorld().getRegistryKey().getValue() == player.getEntityWorld().getRegistryKey().getValue()) {
+                            p.sendMessage(resultMessage, false);
+                        }
                     } else {
                         if (p.squaredDistanceTo(player) <= config.getChatRange()) {
                             p.sendMessage(resultMessage, false);
@@ -88,6 +111,19 @@ public class SimpleChat implements ModInitializer {
                 } else {
                     p.sendMessage(resultMessage, false);
                 }
+
+                //
+//                if (config.isGlobalChatEnabled()) {
+//                    if (isGlobalMessage) {
+//                        p.sendMessage(resultMessage, false);
+//                    } else {
+//                        if (p.squaredDistanceTo(player) <= config.getChatRange()) {
+//                            p.sendMessage(resultMessage, false);
+//                        }
+//                    }
+//                } else {
+//                    p.sendMessage(resultMessage, false);
+//                }
             }
             LOGGER.info(stringMessage);
             return chatMessage;
