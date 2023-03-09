@@ -92,7 +92,7 @@ public class SimpleChat implements ModInitializer {
 
             Text resultMessage = literal(stringMessage);
 
-            // TODO: Add check are there players nearby
+            int isPlayerLocalFound = 0;
 
             List<ServerPlayerEntity> players = Objects.requireNonNull(player.getServer(), "The server cannot be null.")
                     .getPlayerManager().getPlayerList();
@@ -108,6 +108,7 @@ public class SimpleChat implements ModInitializer {
                     } else {
                         if (p.squaredDistanceTo(player) <= config.getChatRange()) {
                             p.sendMessage(resultMessage, false);
+                            isPlayerLocalFound++;
                         }
                     }
                 } else if (config.isWorldChatEnabled()) {
@@ -118,6 +119,7 @@ public class SimpleChat implements ModInitializer {
                     } else {
                         if (p.squaredDistanceTo(player) <= config.getChatRange()) {
                             p.sendMessage(resultMessage, false);
+                            isPlayerLocalFound++;
                         }
                     }
                 } else {
@@ -137,6 +139,13 @@ public class SimpleChat implements ModInitializer {
 //                    p.sendMessage(resultMessage, false);
 //                }
             }
+
+            if (isPlayerLocalFound <= 1 && !isGlobalMessage && !isWorldMessage) {
+                String noPlayerNearbyText = config.getNoPlayerNearbyText();
+                Text noPlayerNearbyTextResult = literal(translateChatColors('&', noPlayerNearbyText));
+                player.sendMessage(noPlayerNearbyTextResult, config.noPlayerNearbyActionBar());
+            }
+
             LOGGER.info(stringMessage);
             return chatMessage;
         });

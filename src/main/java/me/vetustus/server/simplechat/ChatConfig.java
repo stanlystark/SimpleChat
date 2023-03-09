@@ -19,6 +19,10 @@ public class ChatConfig {
     private final String globalChatFormat;
     @SerializedName("world_chat_format")
     private final String worldChatFormat;
+    @SerializedName("no_players_nearby_text")
+    private final String noPlayerNearbyText;
+    @SerializedName("no_players_nearby_action_bar")
+    private final boolean noPlayerNearbyActionBar;
     @SerializedName("chat_range")
     private final int chatRange;
 
@@ -30,6 +34,8 @@ public class ChatConfig {
         localChatFormat = "%player% > &7%message%";
         globalChatFormat = "%player% > &e%message%";
         worldChatFormat = "%player% > &b%message%";
+        noPlayerNearbyText = "&fNo players nearby. Please use &e!<message> &ffor global chat.";
+        noPlayerNearbyActionBar = true;
         chatRange = 100;
     }
 
@@ -49,6 +55,10 @@ public class ChatConfig {
         return isChatColorsEnabled;
     }
 
+    public boolean noPlayerNearbyActionBar() {
+        return noPlayerNearbyActionBar;
+    }
+
     public int getChatRange() {
         return chatRange;
     }
@@ -59,6 +69,11 @@ public class ChatConfig {
 
     public String getWorldChatFormat() {
         return worldChatFormat;
+    }
+
+
+    public String getNoPlayerNearbyText() {
+        return noPlayerNearbyText;
     }
 
     public String getLocalChatFormat() {
