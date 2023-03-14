@@ -25,7 +25,7 @@ import java.util.Objects;
 import static me.vetustus.server.simplechat.ChatColor.translateChatColors;
 
 public class SimpleChat implements ModInitializer {
-    private ChatConfig config;
+    public ChatConfig config;
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
@@ -103,7 +103,7 @@ public class SimpleChat implements ModInitializer {
                             p.sendMessage(resultMessage, false);
                         }
                     } else {
-                        if (p.squaredDistanceTo(player) <= config.getChatRange()) {
+                        if (p.squaredDistanceTo(player) <= config.getChatRange() && p.getEntityWorld().getRegistryKey().getValue() == player.getEntityWorld().getRegistryKey().getValue()) {
                             p.sendMessage(resultMessage, false);
                             isPlayerLocalFound++;
                         }
@@ -114,7 +114,7 @@ public class SimpleChat implements ModInitializer {
                             p.sendMessage(resultMessage, false);
                         }
                     } else {
-                        if (p.squaredDistanceTo(player) <= config.getChatRange()) {
+                        if (p.squaredDistanceTo(player) <= config.getChatRange() && p.getEntityWorld().getRegistryKey().getValue() == player.getEntityWorld().getRegistryKey().getValue()) {
                             p.sendMessage(resultMessage, false);
                             isPlayerLocalFound++;
                         }
