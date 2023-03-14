@@ -77,7 +77,7 @@ public abstract class MixinServerPlayNetworkHandler implements ServerPlayPacketL
                         if (this.canAcceptMessage(signedMessage)) {
                             messageChainTaskQueue.append(() -> {
                                 CompletableFuture<FilteredMessage> completableFuture = this.filterText(signedMessage.getSignedContent().plain());
-                                CompletableFuture<SignedMessage> completableFuture2 = this.server.getMessageDecorator().decorate(this.player, signedMessage);
+                                CompletableFuture<SignedMessage> completableFuture2 = server.getMessageDecorator().decorate(player, signedMessage);
                                 return CompletableFuture.allOf(completableFuture, completableFuture2).thenAcceptAsync((void_) -> {
                                     FilterMask filterMask = ((FilteredMessage)completableFuture.join()).mask();
                                     SignedMessage signedMessageMask = ((SignedMessage)completableFuture2.join()).withFilterMask(filterMask);
