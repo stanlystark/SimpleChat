@@ -58,9 +58,9 @@ public abstract class MixinServerPlayNetworkHandler implements ServerPlayPacketL
     @Inject(method = "onChatMessage", at = @At("HEAD"), cancellable = true)
     public void onChatMessage(ChatMessageC2SPacket packet, CallbackInfo ci) {
         if (hasIllegalCharacter(packet.chatMessage())) {
-            this.disconnect(Text.translatable("multiplayer.disconnect.illegal_characters"));
+            disconnect(Text.translatable("multiplayer.disconnect.illegal_characters"));
         } else {
-            if (this.canAcceptMessage(packet.chatMessage(), packet.timestamp(), packet.acknowledgment())) {
+            if (canAcceptMessage(packet.chatMessage(), packet.timestamp(), packet.acknowledgment())) {
 
                 if (!packet.chatMessage().startsWith("/")) {
                     String string = StringUtils.normalizeSpace(packet.chatMessage());
@@ -73,16 +73,16 @@ public abstract class MixinServerPlayNetworkHandler implements ServerPlayPacketL
                     }
                 } else {
                     server.submit(() -> {
-                        SignedMessage signedMessage = this.getSignedMessage(packet);
-                        if (this.canAcceptMessage(signedMessage)) {
+                        SignedMessage signedMessage = getSignedMessage(packet);
+                        if (canAcceptMessage(signedMessage)) {
                             messageChainTaskQueue.append(() -> {
-                                CompletableFuture<FilteredMessage> completableFuture = this.filterText(signedMessage.getSignedContent().plain());
+                                CompletableFuture<FilteredMessage> completableFuture = filterText(signedMessage.getSignedContent().plain());
                                 CompletableFuture<SignedMessage> completableFuture2 = server.getMessageDecorator().decorate(player, signedMessage);
                                 return CompletableFuture.allOf(completableFuture, completableFuture2).thenAcceptAsync((void_) -> {
                                     FilterMask filterMask = ((FilteredMessage)completableFuture.join()).mask();
                                     SignedMessage signedMessageMask = ((SignedMessage)completableFuture2.join()).withFilterMask(filterMask);
-                                    this.handleDecoratedMessage(signedMessageMask);
-                                }, this.server);
+                                    handleDecoratedMessage(signedMessageMask);
+                                }, server);
                             });
                         }
                     });
