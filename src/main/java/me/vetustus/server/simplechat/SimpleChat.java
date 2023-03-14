@@ -1,6 +1,18 @@
 package me.vetustus.server.simplechat;
 
-import static me.vetustus.server.simplechat.ChatColor.translateChatColors;
+import com.google.gson.Gson;
+import me.vetustus.server.simplechat.api.event.PlayerChatCallback;
+import me.vetustus.server.simplechat.integration.FTBTeamsIntegration;
+import me.vetustus.server.simplechat.integration.LuckPermsIntegration;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,22 +22,7 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.Objects;
 
-import me.vetustus.server.simplechat.integration.FTBTeamsIntegration;
-import me.vetustus.server.simplechat.integration.LuckPermsIntegration;
-import net.fabricmc.loader.api.FabricLoader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.google.gson.Gson;
-
-import me.vetustus.server.simplechat.api.event.PlayerChatCallback;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import static me.vetustus.server.simplechat.ChatColor.translateChatColors;
 
 public class SimpleChat implements ModInitializer {
     private ChatConfig config;
@@ -77,7 +74,7 @@ public class SimpleChat implements ModInitializer {
                 }
             }
             String prepareStringMessage = chatFormat
-                    .replaceAll("%player%", player.getName().asString())
+                    .replaceAll("%player%", player.getName().getString())
                     .replaceAll("%ftbteam%", ftbteams ? FTBTeamsIntegration.getTeam(player) : "")
                     .replaceAll("%lp_group%", luckperms ? translateChatColors('&', LuckPermsIntegration.getPrimaryGroup(player)) : "")
                     .replaceAll("%lp_prefix%", luckperms ? translateChatColors('&', LuckPermsIntegration.getPrefix(player)) : "")
@@ -150,7 +147,7 @@ public class SimpleChat implements ModInitializer {
             return chatMessage;
         });
 
-        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) ->
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
                 dispatcher.register(CommandManager.literal("simplechat").executes(context -> {
                     if (context.getSource().hasPermissionLevel(1)) {
                         try {
@@ -187,6 +184,6 @@ public class SimpleChat implements ModInitializer {
     }
 
     private Text literal(String text) {
-        return new LiteralText(text);
+        return Text.literal(text);
     }
 }
