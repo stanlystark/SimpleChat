@@ -60,7 +60,7 @@ public class ChatConfig {
     }
 
     public int getChatRange() {
-        return chatRange;
+        return chatRange * chatRange;
     }
 
     public String getGlobalChatFormat() {
