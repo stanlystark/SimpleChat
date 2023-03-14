@@ -106,7 +106,7 @@ public class SimpleChat implements ModInitializer {
                             p.sendMessage(resultMessage, false);
                         }
                     } else {
-                        if (p.squaredDistanceTo(player) <= config.getChatRange()) {
+                        if (p.squaredDistanceTo(player) <= config.getChatRange() && p.getEntityWorld().getRegistryKey().getValue() == player.getEntityWorld().getRegistryKey().getValue()) {
                             p.sendMessage(resultMessage, false);
                             isPlayerLocalFound++;
                         }
@@ -117,7 +117,7 @@ public class SimpleChat implements ModInitializer {
                             p.sendMessage(resultMessage, false);
                         }
                     } else {
-                        if (p.squaredDistanceTo(player) <= config.getChatRange()) {
+                        if (p.squaredDistanceTo(player) <= config.getChatRange() && p.getEntityWorld().getRegistryKey().getValue() == player.getEntityWorld().getRegistryKey().getValue()) {
                             p.sendMessage(resultMessage, false);
                             isPlayerLocalFound++;
                         }
