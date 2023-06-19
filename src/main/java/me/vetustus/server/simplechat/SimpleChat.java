@@ -103,7 +103,6 @@ public class SimpleChat implements ModInitializer {
                     if (isGlobalMessage) {
                         p.sendMessage(resultMessage, false);
                     } else if (isWorldMessage && config.isWorldChatEnabled()) {
-                        p.world.getDimensionKey().getValue();
                         if (p.getEntityWorld().getRegistryKey().getValue() == player.getEntityWorld().getRegistryKey().getValue()) {
                             p.sendMessage(resultMessage, false);
                         }

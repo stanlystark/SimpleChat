@@ -125,3 +125,4 @@ SimpleChat_client.launch
 .project
 .classpath
 bin/main/assets/simplechat/icon.png
+/remappedSrc/
