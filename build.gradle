@@ -31,6 +31,10 @@ repositories {
         url = "https://ladysnake.jfrog.io/artifactory/mods"
     }
     maven {
+        url "https://maven.nucleoid.xyz/"
+        name "Nucleoid"
+    }
+    maven {
         url "https://maven.saps.dev/minecraft"
         content {
             includeGroup "dev.latvian.mods"
@@ -44,6 +48,7 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation include("eu.pb4:placeholder-api:${project.placeholder_version}")
 
     modCompileOnly("dev.ftb.mods:ftb-teams-fabric:${project.ftb_teams_version}") { transitive false }
     modCompileOnly("net.luckperms:api:${project.luckperms_version}") { transitive false }

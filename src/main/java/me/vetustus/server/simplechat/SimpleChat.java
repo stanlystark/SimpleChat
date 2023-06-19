@@ -1,6 +1,9 @@
 package me.vetustus.server.simplechat;
 
 import com.google.gson.Gson;
+import eu.pb4.placeholders.api.PlaceholderContext;
+import eu.pb4.placeholders.api.Placeholders;
+import eu.pb4.placeholders.api.TextParserUtils;
 import me.vetustus.server.simplechat.api.event.PlayerChatCallback;
 import me.vetustus.server.simplechat.integration.FTBTeamsIntegration;
 import me.vetustus.server.simplechat.integration.LuckPermsIntegration;
@@ -87,7 +90,8 @@ public class SimpleChat implements ModInitializer {
             if (config.isChatColorsEnabled())
                 stringMessage = translateChatColors('&', stringMessage);
 
-            Text resultMessage = literal(stringMessage);
+//            Text resultMessage = literal(stringMessage);
+            Text resultMessage = Placeholders.parseText(TextParserUtils.formatText(stringMessage), PlaceholderContext.of(player));
 
             int isPlayerLocalFound = 0;
 
@@ -99,6 +103,7 @@ public class SimpleChat implements ModInitializer {
                     if (isGlobalMessage) {
                         p.sendMessage(resultMessage, false);
                     } else if (isWorldMessage && config.isWorldChatEnabled()) {
+                        p.world.getDimensionKey().getValue();
                         if (p.getEntityWorld().getRegistryKey().getValue() == player.getEntityWorld().getRegistryKey().getValue()) {
                             p.sendMessage(resultMessage, false);
                         }
