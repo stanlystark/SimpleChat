@@ -103,7 +103,7 @@ public class SimpleChat implements ModInitializer {
                     if (isGlobalMessage) {
                         p.sendMessage(resultMessage, false);
                     } else if (isWorldMessage && config.isWorldChatEnabled()) {
-                        p.world.getDimensionKey().getValue();
+//                        p.world.getDimensionKey().getValue();
                         if (p.getEntityWorld().getRegistryKey().getValue() == player.getEntityWorld().getRegistryKey().getValue()) {
                             p.sendMessage(resultMessage, false);
                         }
@@ -157,14 +157,14 @@ public class SimpleChat implements ModInitializer {
                     if (context.getSource().hasPermissionLevel(1)) {
                         try {
                             loadConfig();
-                            context.getSource().sendFeedback(literal("Settings are reloaded!"), false);
+                            context.getSource().sendMessage(literal("Settings are reloaded!"));
                         } catch (IOException e) {
-                            context.getSource().sendFeedback(literal("An error occurred while reloading the settings (see the console)!"), false);
+                            context.getSource().sendMessage(literal("An error occurred while reloading the settings (see the console)!"));
                             e.printStackTrace();
                         }
                     } else {
-                        context.getSource().sendFeedback(literal("You don't have the right to do this! If you think this is an error, contact your server administrator.")
-                                .copy().formatted(Formatting.RED), false);
+                        context.getSource().sendMessage(literal("You don't have the right to do this! If you think this is an error, contact your server administrator.")
+                                .copy().formatted(Formatting.RED));
                     }
                     return 1;
                 })));

@@ -1,6 +1,5 @@
 package me.vetustus.server.simplechat.mixin;
 
-import me.vetustus.server.simplechat.SimpleChat;
 import me.vetustus.server.simplechat.api.event.PlayerChatCallback;
 import net.minecraft.SharedConstants;
 import net.minecraft.network.listener.ServerPlayPacketListener;
