@@ -142,7 +142,9 @@ public class SimpleChat implements ModInitializer {
 //                }
             }
 
-            if (isPlayerLocalFound <= 1 && !isGlobalMessage && !isWorldMessage) {
+            if (isPlayerLocalFound <= 1
+                    && (config.isGlobalChatEnabled() && !isGlobalMessage)
+                    && (config.isWorldChatEnabled() && !isWorldMessage)) {
                 String noPlayerNearbyText = config.getNoPlayerNearbyText();
                 Text noPlayerNearbyTextResult = literal(translateChatColors('&', noPlayerNearbyText));
                 player.sendMessage(noPlayerNearbyTextResult, config.noPlayerNearbyActionBar());
