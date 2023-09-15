@@ -1,19 +1,21 @@
 package me.vetustus.server.simplechat.integration;
 
-import dev.ftb.mods.ftbteams.FTBTeamsAPI;
-import dev.ftb.mods.ftbteams.data.Team;
+import dev.ftb.mods.ftbteams.api.FTBTeamsAPI;
+import dev.ftb.mods.ftbteams.api.Team;
 import net.minecraft.server.network.ServerPlayerEntity;
+
+import java.util.Optional;
 
 public class FTBTeamsIntegration {
 
     public static String getTeam(ServerPlayerEntity player) {
-        Team team = FTBTeamsAPI.getPlayerTeam(player.getUuid());
+        Optional<Team> team = FTBTeamsAPI.api().getManager().getTeamByID(player.getUuid());
 
-        if (team == null || team.getType().isPlayer()) {
+        if (team == null || team.get().isPlayerTeam()) {
             return "";
         }
 
-        return team.getDisplayName();
+        return team.get().getName().getString();
     }
 
 }
