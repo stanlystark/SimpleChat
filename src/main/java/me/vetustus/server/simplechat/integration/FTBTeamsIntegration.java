@@ -9,7 +9,7 @@ import java.util.Optional;
 public class FTBTeamsIntegration {
 
     public static String getTeam(ServerPlayerEntity player) {
-        Optional<Team> team = FTBTeamsAPI.api().getManager().getTeamByID(player.getUuid());
+        Optional<Team> team = FTBTeamsAPI.api().getManager().getTeamForPlayerID(player.getUuid());
 
         if (team == null || team.get().isPlayerTeam()) {
             return "";
