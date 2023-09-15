@@ -23,6 +23,8 @@ public class ChatConfig {
     private final String noPlayerNearbyText;
     @SerializedName("no_players_nearby_action_bar")
     private final boolean noPlayerNearbyActionBar;
+    @SerializedName("no_players_nearby_message")
+    private final boolean noPlayerNearbyMessage;
     @SerializedName("chat_range")
     private final int chatRange;
 
@@ -35,6 +37,7 @@ public class ChatConfig {
         globalChatFormat = "%player% > &e%message%";
         worldChatFormat = "%player% > &b%message%";
         noPlayerNearbyText = "&fNo players nearby. Please use &e!<message> &ffor global chat.";
+        noPlayerNearbyMessage = true;
         noPlayerNearbyActionBar = true;
         chatRange = 100;
     }
@@ -57,6 +60,10 @@ public class ChatConfig {
 
     public boolean noPlayerNearbyActionBar() {
         return noPlayerNearbyActionBar;
+    }
+
+    public boolean noPlayerNearbyMessage() {
+        return noPlayerNearbyMessage;
     }
 
     public int getChatRange() {
